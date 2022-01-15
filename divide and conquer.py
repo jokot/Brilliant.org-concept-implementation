@@ -30,7 +30,7 @@ def findLightestBox2(boxes, initialIndex = [], steps=0):
                 return findLightestBox2(boxes[mid:], initialIndex[mid:], steps+1)
 
 # get distance number so that the sum of the distance and the number is divisible by 3
-def getDistanceSoItDiffisibleBy3(n):
+def getUpperDistanceSoItDiffisibleBy3(n):
     """
     get distance number so that the sum of the distance and the number is divisible by 3.
     """
@@ -39,7 +39,7 @@ def getDistanceSoItDiffisibleBy3(n):
             return 0
         return 3-n
     else:
-        return getDistanceSoItDiffisibleBy3(n-3)
+        return getUpperDistanceSoItDiffisibleBy3(n-((n//3)*3))
 
 def findLightestBox3(boxes, initialIndex = [], steps=0):
     """
@@ -53,7 +53,7 @@ def findLightestBox3(boxes, initialIndex = [], steps=0):
         print("Steps:", steps+1)
         return initialIndex[0] if boxes[0] < boxes[1] else initialIndex[1]
     else:
-        distance = getDistanceSoItDiffisibleBy3(len(boxes))
+        distance = getUpperDistanceSoItDiffisibleBy3(len(boxes))
         oneThird = (len(boxes)+distance) // 3
         twoThird = (len(boxes)+distance) // 3 * 2
         if sum(boxes[:oneThird]) == sum(boxes[oneThird:twoThird]):
@@ -72,8 +72,5 @@ if __name__ == '__main__':
     boxes = [w for i in range(n)]
     i = random.randint(0, len(boxes)-1)   
     boxes[i] = w - 1
-    print(boxes)
-    distance = getDistanceSoItDiffisibleBy3(len(boxes))
-    print(len(boxes),distance)
     print("The lightest box is at index:", findLightestBox2(boxes))
     print("The lightest box is at index:", findLightestBox3(boxes))
